@@ -2,6 +2,7 @@ _var/
 .DS_Store
 .php_cs.cache
 composer.lock
+neo/
 phpunit.xml
 vendor/
 *.idea

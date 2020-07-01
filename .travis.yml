@@ -43,7 +43,8 @@ install:
     - sed -i.bak '0,/\(dbms\.security\.auth_enabled=\).*/s/^#//g' ./neo/conf/neo4j.conf
     - cat ./neo/conf/neo4j.conf | grep auth_enabled
     - neo/bin/neo4j start &
-    - sleep 10 # do not remove this line !
+    - sleep 25 # do not remove this line !
+    - cat ./neo/logs/neo4j.log
 
 script:
     - vendor/bin/phpunit --exclude-group xml-mapping
