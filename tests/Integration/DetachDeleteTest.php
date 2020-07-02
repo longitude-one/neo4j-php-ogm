@@ -11,7 +11,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\Models\MoviesDemo\Person;
  */
 class DetachDeleteTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->playMovies();
@@ -21,7 +21,7 @@ class DetachDeleteTest extends IntegrationTestCase
     {
         $actor = $this->em->getRepository(Person::class)->findOneBy(['name' => 'Al Pacino']);
         $this->em->remove($actor);
-        $this->setExpectedException(Neo4jException::class);
+        self::expectException(Neo4jException::class);
         $this->em->flush();
     }
 

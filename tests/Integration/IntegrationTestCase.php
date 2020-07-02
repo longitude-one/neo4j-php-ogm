@@ -14,8 +14,9 @@ namespace GraphAware\Neo4j\OGM\Tests\Integration;
 use GraphAware\Neo4j\Client\Event\PreRunEvent;
 use GraphAware\Neo4j\Client\Neo4jClientEvents;
 use GraphAware\Neo4j\OGM\EntityManager;
+use PHPUnit\Framework\TestCase;
 
-class IntegrationTestCase extends \PHPUnit_Framework_TestCase
+class IntegrationTestCase extends TestCase
 {
     protected $calls = [];
 
@@ -29,7 +30,7 @@ class IntegrationTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->createEntityManager();
         $this->client = $this->em->getDatabaseDriver();

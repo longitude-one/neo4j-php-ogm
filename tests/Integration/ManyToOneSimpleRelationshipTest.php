@@ -14,7 +14,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\Models\ManyToOne\Woman;
  */
 class ManyToOneSimpleRelationshipTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();
@@ -55,7 +55,7 @@ class ManyToOneSimpleRelationshipTest extends IntegrationTestCase
         $this->assertCount(3, $woman->getBags());
         /** @var Bag $bagToRemove */
         $bagToRemove = $woman->getBags()[0];
-        $hash = spl_object_hash($bagToRemove);
+        spl_object_hash($bagToRemove);
         $woman->getBags()->removeElement($bagToRemove);
         $this->assertCount(2, $woman->getBags());
         $bagToRemove->setOwner(null);

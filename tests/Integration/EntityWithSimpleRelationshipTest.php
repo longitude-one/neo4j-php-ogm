@@ -23,7 +23,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\Models\EntityWithSimpleRelationship\P
  */
 class EntityWithSimpleRelationshipTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();

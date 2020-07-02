@@ -11,7 +11,6 @@
 
 namespace GraphAware\Neo4j\OGM\Tests\Integration;
 
-use GraphAware\Neo4j\OGM\Proxy\EntityProxy;
 use GraphAware\Neo4j\OGM\Tests\Integration\Models\RelationshipSameLabel\Building;
 use GraphAware\Neo4j\OGM\Tests\Integration\Models\RelationshipSameLabel\Room;
 use GraphAware\Neo4j\OGM\Tests\Integration\Models\RelationshipSameLabel\Equipment;
@@ -23,7 +22,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\Models\RelationshipSameLabel\Equipmen
  */
 class RelationshipSameLabelTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();

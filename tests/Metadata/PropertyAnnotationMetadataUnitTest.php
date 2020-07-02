@@ -12,13 +12,14 @@
 namespace GraphAware\Neo4j\OGM\Tests\Metadata;
 
 use GraphAware\Neo4j\OGM\Metadata\PropertyAnnotationMetadata;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PropertyMetadataUnitTest.
  *
  * @group metadata
  */
-class PropertyAnnotationMetadataUnitTest extends \PHPUnit_Framework_TestCase
+class PropertyAnnotationMetadataUnitTest extends TestCase
 {
     public function testInit()
     {

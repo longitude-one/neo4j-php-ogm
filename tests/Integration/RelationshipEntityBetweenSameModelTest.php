@@ -15,7 +15,7 @@ use GraphAware\Neo4j\OGM\Proxy\LazyCollection;
  */
 class RelationshipEntityBetweenSameModelTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();

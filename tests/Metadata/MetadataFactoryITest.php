@@ -18,13 +18,14 @@ use GraphAware\Neo4j\OGM\Metadata\Factory\Annotation\AnnotationGraphEntityMetada
 use GraphAware\Neo4j\OGM\Metadata\GraphEntityMetadata;
 use GraphAware\Neo4j\OGM\Metadata\NodeEntityMetadata;
 use GraphAware\Neo4j\OGM\Tests\Metadata\Factory\Fixtures\Person;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class MetadataFactoryITest.
  *
  * @group metadata-factory-it
  */
-class MetadataFactoryITest extends \PHPUnit_Framework_TestCase
+class MetadataFactoryITest extends TestCase
 {
     protected $annotationReader;
 
@@ -33,7 +34,7 @@ class MetadataFactoryITest extends \PHPUnit_Framework_TestCase
      */
     protected $entityMetadataFactory;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->annotationReader = new FileCacheReader(

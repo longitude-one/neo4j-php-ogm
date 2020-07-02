@@ -13,6 +13,8 @@ namespace GraphAware\Neo4j\OGM\Tests\Metadata\Factory;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator;
+use DOMDocument;
+use GlobIterator;
 use GraphAware\Neo4j\OGM\Metadata\EntityPropertyMetadata;
 use GraphAware\Neo4j\OGM\Metadata\Factory\Annotation\AnnotationGraphEntityMetadataFactory;
 use GraphAware\Neo4j\OGM\Metadata\Factory\Xml\IdXmlMetadataFactory;
@@ -27,13 +29,14 @@ use GraphAware\Neo4j\OGM\Tests\Metadata\Factory\Fixtures\Movie;
 use GraphAware\Neo4j\OGM\Tests\Metadata\Factory\Fixtures\MovieRepository;
 use GraphAware\Neo4j\OGM\Tests\Metadata\Factory\Fixtures\Person;
 use GraphAware\Neo4j\OGM\Tests\Metadata\Factory\Fixtures\Rating;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class GraphEntityMetadataFactoryTest.
  *
  * @group xml-mapping
  */
-class GraphEntityMetadataFactoryTest extends \PHPUnit_Framework_TestCase
+class GraphEntityMetadataFactoryTest extends TestCase
 {
     /**
      * @var AnnotationGraphEntityMetadataFactory
@@ -45,7 +48,7 @@ class GraphEntityMetadataFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private $xmlMetadataFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->annotationMetadataFactory = new AnnotationGraphEntityMetadataFactory(new AnnotationReader());
         $this->xmlMetadataFactory = new XmlGraphEntityMetadataFactory(
@@ -84,7 +87,7 @@ class GraphEntityMetadataFactoryTest extends \PHPUnit_Framework_TestCase
         $createdMetadata = $personMetadata->getPropertyMetadata('created');
         $this->assertTrue($createdMetadata->hasConverter());
         $this->assertEquals('datetime', $createdMetadata->getConverterType());
-        $this->assertInternalType('array', $createdMetadata->getConverterOptions());
+        self::assertIsArray($createdMetadata->getConverterOptions());
         $this->assertArrayHasKey('db_format', $createdMetadata->getConverterOptions());
     }
 
@@ -96,11 +99,11 @@ class GraphEntityMetadataFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testMappingValidAccordingToSchema()
     {
-        $filesIterator = new \GlobIterator(__DIR__.'/Fixtures/graphaware/*.ogm.xml');
+        $filesIterator = new GlobIterator(__DIR__.'/Fixtures/graphaware/*.ogm.xml');
 
         $previous = libxml_use_internal_errors(true);
         foreach ($filesIterator as $fileInfo) {
-            $dom = new \DOMDocument();
+            $dom = new DOMDocument();
             $dom->loadXML(file_get_contents($fileInfo->getPathName()));
 
             if (!$dom->schemaValidate(getenv('basedir').'graphaware-mapping.xsd')) {
@@ -112,6 +115,7 @@ class GraphEntityMetadataFactoryTest extends \PHPUnit_Framework_TestCase
             }
         }
         libxml_use_internal_errors($previous);
+        self::markTestIncomplete('Is this test complete?');
     }
 
     /**
@@ -142,7 +146,7 @@ class GraphEntityMetadataFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('id', $metadata->getIdentifier());
 
-        $properties = $metadata->getPropertiesMetadata();
+        $metadata->getPropertiesMetadata();
 
         $nameProperty = $metadata->getPropertyMetadata('name');
         $this->assertSame('string', $nameProperty->getPropertyAnnotationMetadata()->getType());

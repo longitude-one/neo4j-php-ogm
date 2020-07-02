@@ -11,11 +11,12 @@
 
 namespace GraphAware\Neo4j\OGM\Tests\Integration;
 
+use DateTime;
 use GraphAware\Neo4j\OGM\Tests\Integration\Models\NodePropertyKeyMapping\Employee;
 
 class NodePropertyKeyMappingTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();
@@ -23,7 +24,7 @@ class NodePropertyKeyMappingTest extends IntegrationTestCase
 
     public function testNodePropertyKeyIsUsedForMapping()
     {
-        $hiredOn = new \DateTime();
+        $hiredOn = new DateTime();
         $employee = new Employee('John Doe', $hiredOn);
 
         $this->em->persist($employee);

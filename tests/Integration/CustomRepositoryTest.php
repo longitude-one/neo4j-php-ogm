@@ -11,7 +11,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\Repository\MoviesCustomRepository;
  */
 class CustomRepositoryTest extends IntegrationTestCase
 {
-   public function setUp()
+   public function setUp(): void
    {
        parent::setUp();
        $this->clearDb();

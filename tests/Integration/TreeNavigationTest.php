@@ -9,7 +9,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\Models\Tree\Level;
  */
 class TreeNavigationTest extends IntegrationTestCase
 {
-   public function setUp()
+   public function setUp(): void
    {
        parent::setUp();
        $this->clearDb();

@@ -2,6 +2,7 @@
 
 namespace GraphAware\Neo4j\OGM\Tests\Integration\Convert;
 
+use DateTime;
 use GraphAware\Neo4j\OGM\Tests\Integration\IntegrationTestCase;
 use GraphAware\Neo4j\OGM\Annotations as OGM;
 use GraphAware\Neo4j\OGM\Tests\Integration\Models\SimpleRelationshipEntity\Guest;
@@ -14,7 +15,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\Models\SimpleRelationshipEntity\Ratin
  */
 class TimestampConverterIntegrationTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();
@@ -35,7 +36,7 @@ class TimestampConverterIntegrationTest extends IntegrationTestCase
     public function testEntityWithDateTimeIsPersistedWithTimestampLong()
     {
         $e = new TimestampConverterEntity();
-        $dt = new \DateTime("NOW");
+        $dt = new DateTime("NOW");
         $e->setTime($dt);
         $this->persist($e);
         $this->em->flush();
@@ -46,7 +47,7 @@ class TimestampConverterIntegrationTest extends IntegrationTestCase
     public function testEntityWithDateTimeIsRetrievedFromDatabase()
     {
         $e = new TimestampConverterEntity();
-        $dt = new \DateTime("NOW");
+        $dt = new DateTime("NOW");
         $e->setTime($dt);
         $this->persist($e);
         $this->em->flush();
@@ -54,33 +55,33 @@ class TimestampConverterIntegrationTest extends IntegrationTestCase
         $this->em->clear();
 
         $o = $this->em->getRepository(TimestampConverterEntity::class)->findOneBy(['time' => $ts]);
-        $this->assertInstanceOf(\DateTime::class, $o->getTime());
+        $this->assertInstanceOf(DateTime::class, $o->getTime());
     }
-    
+
     public function testTimestampsMillisAreConverted()
     {
-        $dt = new \DateTime("NOW");
+        $dt = new DateTime("NOW");
         $ts = $dt->getTimestamp();
         $time = (($ts*1000) + 123);
         $this->client->run('CREATE (n:Entity) SET n.time = '.$time );
         /** @var TimestampConverterEntity[] $objects */
         $objects = $this->em->getRepository(TimestampConverterEntity::class)->findAll();
         $this->assertCount(1, $objects);
-        $this->assertInstanceOf(\DateTime::class, $objects[0]->getTime());
+        $this->assertInstanceOf(DateTime::class, $objects[0]->getTime());
         $this->assertEquals($ts, $objects[0]->getTime()->getTimestamp());
     }
 
     public function testTimestampCanBeUpdated()
     {
         $e = new TimestampConverterEntity();
-        $dt = new \DateTime("NOW");
+        $dt = new DateTime("NOW");
         $e->setTime($dt);
         $this->persist($e);
         $this->em->flush();
         $ts = $dt->getTimestamp() * 1000;
         $this->assertGraphExist('(e:Entity {time: '.$ts.'})');
 
-        $dt = new \DateTime("1990-01-01");
+        $dt = new DateTime("1990-01-01");
         $ts = $dt->getTimestamp() * 1000;
         $e->setTime($dt);
         $this->em->flush();
@@ -125,7 +126,7 @@ class TimestampConverterEntity
     protected $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @OGM\Property()
      * @OGM\Convert(type="datetime", options={"format":"long_timestamp"})

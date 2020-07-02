@@ -10,7 +10,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\IntegrationTestCase;
  */
 class Issue103ReportTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();

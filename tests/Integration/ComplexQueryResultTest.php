@@ -11,7 +11,7 @@ use GraphAware\Neo4j\OGM\Tests\Integration\Models\MoviesDemo\Person;
  */
 class ComplexQueryResultTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();
@@ -32,8 +32,8 @@ class ComplexQueryResultTest extends IntegrationTestCase
         $row = $result[0];
 
         $this->assertInstanceOf(Person::class, $row['n']);
-        $this->assertInternalType('array', $row['actInfo']);
-        $this->assertInternalType('array', $row['actInfo']['roles']);
+        self::assertIsArray($row['actInfo']);
+        self::assertIsArray($row['actInfo']['roles']);
         $this->assertInstanceOf(Movie::class, $row['actInfo']['movie']);
     }
 
@@ -41,8 +41,8 @@ class ComplexQueryResultTest extends IntegrationTestCase
     {
         $this->clearDb();
         $this->playMovies();
-        $q = $this->em->createQuery('MATCH (n:Person {name:"Tom Hanks"})-[r:ACTED_IN]->(m) 
-        WITH n, {roles: r.roles, movie: m} AS actInfo 
+        $q = $this->em->createQuery('MATCH (n:Person {name:"Tom Hanks"})-[r:ACTED_IN]->(m)
+        WITH n, {roles: r.roles, movie: m} AS actInfo
         RETURN n, collect(actInfo) AS actorInfos LIMIT 2');
 
         $q->addEntityMapping('n', Person::class);
@@ -51,14 +51,14 @@ class ComplexQueryResultTest extends IntegrationTestCase
 
         $result = $q->getResult();
         $this->assertCount(1, $result);
-        $this->assertInternalType('array', $result[0]['actorInfos']);
+        self::assertIsArray($result[0]['actorInfos']);
         $this->assertInstanceOf(Movie::class, $result[0]['actorInfos'][0]['movie']);
         $this->assertCount(12, $result[0]['actorInfos']);
     }
 
     public function testQueryReturningCollectionOfEntitiesInMap()
     {
-        $q = $this->em->createQuery('MATCH (n:Person)-[r:ACTED_IN]->(m) 
+        $q = $this->em->createQuery('MATCH (n:Person)-[r:ACTED_IN]->(m)
         RETURN n, {score: size((n)-[:ACTED_IN]->()), movies: collect(m)} AS infos LIMIT 10');
 
         $q->addEntityMapping('n', Person::class);
@@ -70,14 +70,14 @@ class ComplexQueryResultTest extends IntegrationTestCase
         $this->assertCount(10, $result);
         $row = $result[0];
         $this->assertInstanceOf(Person::class, $row['n']);
-        $this->assertInternalType('array', $row['infos']);
+        self::assertIsArray($row['infos']);
         $this->assertEquals($row['infos']['score'], count($row['infos']['movies']));
         $this->assertInstanceOf(Movie::class, $row['infos']['movies'][0]);
     }
 
     public function testQueryReturningMapAsOnlyColumn()
     {
-        $q = $this->em->createQuery('MATCH (n:Person)-[r:ACTED_IN]->(m) 
+        $q = $this->em->createQuery('MATCH (n:Person)-[r:ACTED_IN]->(m)
         RETURN {user: n, score: size((n)-[:ACTED_IN]->()), movies: collect(m)} AS infos LIMIT 10');
 
         $q->addEntityMapping('user', Person::class);
@@ -88,7 +88,7 @@ class ComplexQueryResultTest extends IntegrationTestCase
 
         $this->assertCount(10, $result);
         $row = $result[0];
-        $this->assertInternalType('array', $row['infos']);
+        self::assertIsArray($row['infos']);
         $this->assertEquals(1, count(array_keys($row)));
         $this->assertInstanceOf(Person::class, $row['infos']['user']);
         $this->assertEquals($row['infos']['score'], count($row['infos']['movies']));

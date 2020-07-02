@@ -11,13 +11,14 @@
 
 namespace GraphAware\Neo4j\OGM\Tests\Integration;
 
+use DateTime;
 use GraphAware\Neo4j\OGM\Tests\Integration\Models\RelationshipPropertyKeyMapping\Device;
 use GraphAware\Neo4j\OGM\Tests\Integration\Models\RelationshipPropertyKeyMapping\Employee;
 use GraphAware\Neo4j\OGM\Tests\Integration\Models\RelationshipPropertyKeyMapping\UsesDevice;
 
 class RelationshipPropertyKeyMappingTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->clearDb();
@@ -27,7 +28,7 @@ class RelationshipPropertyKeyMappingTest extends IntegrationTestCase
     {
         $employee = new Employee('John Doe');
         $device = new Device('Apple iPhone X');
-        $inUseSince = new \DateTime();
+        $inUseSince = new DateTime();
         $usesDevice = new UsesDevice($employee, $device, $inUseSince);
 
         $employee->setDevice($usesDevice);
