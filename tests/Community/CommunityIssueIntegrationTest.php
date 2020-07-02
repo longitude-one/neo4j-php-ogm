@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace GraphAware\Neo4j\OGM\Tests\Integration\Community;
+namespace GraphAware\Neo4j\OGM\Tests\Community;
 
 use GraphAware\Neo4j\OGM\Tests\Integration\IntegrationTestCase;
 
