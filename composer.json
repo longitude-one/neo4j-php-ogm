@@ -1,7 +1,7 @@
 {
     "name": "longitude-one/neo4j-php-ogm",
     "description": "PHP Object Graph Mapper for Neo4j",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "keywords": [
         "neo4j",
         "graph",
@@ -19,9 +19,12 @@
     }, {
         "name": "GraphAware Ltd",
         "email": "php@graphaware.com"
+    }, {
+        "name": "Alexandre Tranchant",
+        "email": "alexandre.tranchant@gmail.com"
     }],
     "require": {
-        "php": "^7.3",
+        "php": "^7.2",
         "doctrine/annotations": "^1.2",
         "doctrine/collections": "^1.3",
         "doctrine/common": "^2.6",
@@ -35,8 +38,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "GraphAware\\Neo4j\\OGM\\Tests\\": "tests/",
-            "Movies\\": "docs/_code/movies"
+            "GraphAware\\Neo4j\\OGM\\Tests\\": "tests/"
         }
     },
     "require-dev": {
